@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var routes = require('./routes/index.js');
-var auth =require('./auth.js')
+var routes = require('./routes/form.js');
+var auth =require('./middleware/auth.js')
 
 app.use(bodyParser.urlencoded({
     extended: true

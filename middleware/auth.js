@@ -1,4 +1,4 @@
-var db = require('./seqdb/db.js');
+var db = require('../seqdb/db.js');
 var passport = require('passport');
 var Strategy = require('passport-http-bearer').Strategy;
 var jwt = require('jsonwebtoken');
