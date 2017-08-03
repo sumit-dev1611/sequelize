@@ -1,0 +1,30 @@
+{
+  "name": "sequelize1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sumit-dev1611/sequelize.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sumit-dev1611/sequelize/issues"
+  },
+  "homepage": "https://github.com/sumit-dev1611/sequelize#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "jwt-decode": "^2.2.0",
+    "mysql": "^2.14.1",
+    "passport": "^0.3.2",
+    "passport-http-bearer": "^1.0.1",
+    "sequelize": "^4.4.2"
+  },
+  "devDependencies": {}
+}
