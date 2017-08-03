@@ -18,26 +18,24 @@ router.post('/user/register/', function(req, res, next) {
                 firstname: data.firstname,
                 lastname: data.lastname
             })
-            detail.save().then((data, err) => {
-                if (err) {
-                    next(err)
-                } else {
+            detail.save().then((data) => {
+                if (data) {
                     res.json({ user_detail: data })
                 }
+            }).catch((err) => {
+                next(err);
             });
         }
     })
 });
 
 router.post('/user/login/', function(req, res, next) {
-    validation.validateLogin(req.body, function(err, data) {     
+    validation.validateLogin(req.body, function(err, data) {
         if (err) {
             next(err)
         } else {
-            model.user.find({ where: { username: data.username, password: data.password } }).then((users, err) => {
-                if (err) {
-                    next(err)
-                } else if (users) { 
+            model.user.find({ where: { username: data.username, password: data.password } }).then((users) => {
+                if (users) {
                     var payload = { user_id: users.id };
                     var token = jwt.sign(payload, "abc", {
                         expiresIn: 3600000
@@ -46,40 +44,42 @@ router.post('/user/login/', function(req, res, next) {
                 } else {
                     next('Not a user !!!     Get registered');
                 }
+            }).catch((err) => {
+                next(err)
             });
         }
     });
 });
 
-router.get('/user/get', passport.authenticate('bearer', { session: false }), function(req, res,next) {
-    model.user.find({ where: { id: req.user.id },include: [model.address] }).then((complete_data,err) => {
-        if (err) {
-            next(err);
-        } else if (complete_data) {
+router.get('/user/get', passport.authenticate('bearer', { session: false }), function(req, res, next) {
+    model.user.find({ where: { id: req.user.id }, include: [model.address] }).then((complete_data) => {
+        if (complete_data) {
             res.json({ user_detail: complete_data })
         } else {
             next("can't fetch data");
         }
+    }).catch((err) => {
+        next(err);
     });
 });
 
 router.all('/user/delete', passport.authenticate('bearer', { session: false }), function(req, res, next) {
-    model.user.destroy({ where: { id: req.user.id } }).then((result,err) => {
-        if (err) {
-            next(err)
-        } else {
+    model.user.destroy({ where: { id: req.user.id } }).then((result) => {
+        if (result) {
             res.json({ success: "success" });
         }
+    }).catch((err) => {
+        next(err);
     });
 });
 
 router.get('/user/list', passport.authenticate('bearer', { session: false }), function(req, res, next) {
-    model.user.findAll({ offset: ((req.query.page) * parseInt(req.query.limit)), limit: parseInt(req.query.limit) }).then((data,err) => {
-        if (err) {
-            next(err)
-        } else {
+    model.user.findAll({ offset: ((req.query.page) * parseInt(req.query.limit)), limit: parseInt(req.query.limit) }).then((data) => {
+        if (data) {
             res.json({ list: data });
         }
+    }).catch((err) => {
+        next(err);
     });
 });
 
@@ -93,12 +93,12 @@ router.post('/user/address', passport.authenticate('bearer', { session: false })
                 address: data.address,
                 phone_no: data.phone_no
             });
-            userAddress.save().then((data, err) => {
-                if (err) {
-                    next(err)
-                } else {
+            userAddress.save().then((data) => {
+                if (data) {
                     res.json({ address: data })
                 }
+            }).catch((err) => {
+                next(err);
             });
         }
     });
